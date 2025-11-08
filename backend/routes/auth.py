@@ -89,7 +89,10 @@ def register():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        # Log the error for debugging but don't expose details to user
+        import logging
+        logging.error(f'Registration error: {str(e)}')
+        return jsonify({'error': 'Registration failed. Please try again.'}), 500
 
 @bp.route('/login', methods=['POST'])
 def login():
@@ -134,7 +137,9 @@ def login():
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging
+        logging.error(f'Login error: {str(e)}')
+        return jsonify({'error': 'Login failed. Please try again.'}), 500
 
 @bp.route('/refresh', methods=['POST'])
 @jwt_required(refresh=True)
@@ -149,7 +154,9 @@ def refresh():
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging
+        logging.error(f'Token refresh error: {str(e)}')
+        return jsonify({'error': 'Token refresh failed. Please try again.'}), 500
 
 @bp.route('/me', methods=['GET'])
 @jwt_required()
@@ -165,4 +172,6 @@ def get_current_user():
         return jsonify(user.to_dict()), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging
+        logging.error(f'Get user error: {str(e)}')
+        return jsonify({'error': 'Failed to retrieve user information.'}), 500

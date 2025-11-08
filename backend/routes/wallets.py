@@ -22,7 +22,7 @@ def get_wallets():
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/<currency>', methods=['GET'])
 @jwt_required()
@@ -51,7 +51,7 @@ def get_wallet(currency):
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/transfer', methods=['POST'])
 @jwt_required()
@@ -171,7 +171,7 @@ def transfer():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/withdraw', methods=['POST'])
 @jwt_required()
@@ -245,4 +245,4 @@ def withdraw():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500

@@ -108,7 +108,7 @@ def process_payment():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/transactions', methods=['GET'])
 @jwt_required()
@@ -142,7 +142,7 @@ def get_transactions():
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/transactions/<transaction_id>', methods=['GET'])
 @jwt_required()
@@ -162,7 +162,7 @@ def get_transaction(transaction_id):
         return jsonify(transaction.to_dict()), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/refund', methods=['POST'])
 @jwt_required()
@@ -251,7 +251,7 @@ def request_refund():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/methods', methods=['GET'])
 @jwt_required()
@@ -270,7 +270,7 @@ def get_payment_methods():
         }), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/methods', methods=['POST'])
 @jwt_required()
@@ -325,4 +325,4 @@ def add_payment_method():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500

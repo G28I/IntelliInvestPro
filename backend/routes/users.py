@@ -19,7 +19,7 @@ def get_profile():
         return jsonify(user.to_dict()), 200
         
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/profile', methods=['PUT'])
 @jwt_required()
@@ -62,7 +62,7 @@ def update_profile():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
 @bp.route('/change-password', methods=['POST'])
 @jwt_required()
@@ -107,4 +107,4 @@ def change_password():
         
     except Exception as e:
         db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+        import logging; logging.error(f'Error: {str(e)}'); return jsonify({'error': 'An error occurred. Please try again.'}), 500
